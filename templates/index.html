@@ -3,107 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprehensive Student Registration</title>
+    <title>Student Admission Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: linear-gradient(135deg, #71b7e6, #9b59b6); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
-        .container { background-color: #ffffff; max-width: 600px; width: 100%; border-radius: 12px; padding: 40px 30px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
-        .title { font-size: 24px; font-weight: 600; color: #333; text-align: center; margin-bottom: 5px; }
-        .subtitle { font-size: 14px; color: #666; text-align: center; margin-bottom: 25px; }
-        
-        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
-        .form-group { flex: 1; }
-        .form-group.full-width { margin-bottom: 15px; }
-        
-        label { display: block; font-weight: 500; margin-bottom: 5px; color: #2c3e50; font-size: 13px; }
-        input, select, textarea { width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; outline: none; background-color: #f8f9fa; transition: all 0.3s ease; }
-        input:focus, select:focus, textarea:focus { border-color: #9b59b6; background-color: #fff; box-shadow: 0 0 5px rgba(155, 89, 182, 0.3); }
-        textarea { resize: vertical; height: 80px; }
-        
-        .submit-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #71b7e6, #9b59b6); color: #fff; font-size: 16px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: background 0.3s ease; margin-top: 15px; }
-        .submit-btn:hover { background: linear-gradient(-135deg, #71b7e6, #9b59b6); }
-
-        @media (max-width: 600px) { .form-row { flex-direction: column; gap: 0; } .form-group { margin-bottom: 15px; } }
+        body { background: linear-gradient(135deg, #71b7e6, #9b59b6); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .container { background-color: #ffffff; max-width: 600px; width: 100%; border-radius: 12px; padding: 30px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
+        .title { font-size: 24px; font-weight: 600; text-align: center; margin-bottom: 20px; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        .form-row { display: flex; gap: 15px; }
+        label { display: block; font-weight: 500; margin-bottom: 5px; font-size: 13px; color: #2c3e50; }
+        input, select, textarea { width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; outline: none; background: #f8f9fa; }
+        .otp-section { background: #f0f4f8; padding: 15px; border-radius: 8px; border: 1px dashed #9b59b6; margin-bottom: 15px; }
+        .btn-small { padding: 8px 12px; cursor: pointer; border-radius: 4px; border: none; background: #9b59b6; color: white; font-size: 12px; }
+        .submit-btn { width: 100%; padding: 12px; background: #28a745; color: #fff; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .msg { font-size: 12px; margin-top: 5px; font-weight: bold; }
+        @media (max-width: 500px) { .form-row { flex-direction: column; gap: 0; } }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="title">Student Admission Form</div>
-        <div class="subtitle">Please fill all the details carefully</div>
+<div class="container">
+    <div class="title">Student Admission Portal</div>
+    <form action="/submit" method="POST">
+        <div class="form-group"><label>Full Name</label><input type="text" name="name" required></div>
         
-        <form action="/submit" method="POST">
-            
-            <div class="form-group full-width">
-                <label>Full Name</label>
-                <input type="text" name="name" placeholder="Enter your full name" required>
-            </div>
+        <div class="form-row">
+            <div class="form-group" style="flex:1;"><label>Father's Name</label><input type="text" name="father_name" required></div>
+            <div class="form-group" style="flex:1;"><label>Mother's Name</label><input type="text" name="mother_name" required></div>
+        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Father's Name</label>
-                    <input type="text" name="father_name" placeholder="Enter father's name" required>
-                </div>
-                <div class="form-group">
-                    <label>Mother's Name</label>
-                    <input type="text" name="mother_name" placeholder="Enter mother's name" required>
-                </div>
+        <div class="otp-section">
+            <label>Email ID Verification</label>
+            <div style="display: flex; gap: 10px;">
+                <input type="email" id="email" name="email" placeholder="example@gmail.com" required>
+                <button type="button" class="btn-small" onclick="sendOTP()">Send OTP</button>
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Date of Birth</label>
-                    <input type="date" name="dob" required>
-                </div>
-                <div class="form-group">
-                    <label>Gender</label>
-                    <select name="gender" required>
-                        <option value="" disabled selected>Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+            <div id="otpInputArea" style="display: none; margin-top: 10px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="otp_code" placeholder="Enter 6-digit code">
+                    <button type="button" class="btn-small" style="background:#27ae60;" onclick="verifyOTP()">Verify</button>
                 </div>
             </div>
+            <p id="otpMsg" class="msg"></p>
+        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Mobile Number</label>
-                    <input type="tel" name="mobile" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
-                </div>
-                <div class="form-group">
-                    <label>Email ID</label>
-                    <input type="email" name="email" placeholder="example@email.com" required>
-                </div>
+        <div class="form-row">
+            <div class="form-group" style="flex:1;"><label>Mobile Number</label><input type="tel" name="mobile" required></div>
+            <div class="form-group" style="flex:1;"><label>Date of Birth</label><input type="date" name="dob" required></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group" style="flex:1;"><label>Course</label>
+                <select name="course" required>
+                    <option value="B.Sc. 2nd Year">B.Sc. 2nd Year (PCM)</option>
+                    <option value="B.Sc. 1st Year">B.Sc. 1st Year</option>
+                    <option value="B.A.">B.A.</option>
+                </select>
             </div>
+            <div class="form-group" style="flex:1;"><label>Roll Number</label><input type="text" name="roll_no" required></div>
+        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Course / Program</label>
-                    <select name="course" required>
-                        <option value="" disabled selected>Select Course</option>
-                        <option value="B.Sc.">B.Sc.</option>
-                        <option value="B.A.">B.A.</option>
-                        <option value="B.Com.">B.Com.</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Roll Number</label>
-                    <input type="text" name="roll_no" placeholder="e.g. 23045" required>
-                </div>
-            </div>
+        <div class="form-group"><label>Address</label><textarea name="address" rows="2" required></textarea></div>
 
-            <div class="form-group full-width">
-                <label>Permanent Address</label>
-                <textarea name="address" placeholder="Enter your full address" required></textarea>
-            </div>
+        <button type="submit" id="submitBtn" class="submit-btn" disabled>Submit Verified Form</button>
+    </form>
+</div>
 
-            <button type="submit" class="submit-btn">Submit Form</button>
-            
-        </form>
-    </div>
+<script>
+    function sendOTP() {
+        const email = document.getElementById('email').value;
+        if(!email) return alert("Pehle Email bhariye");
+        document.getElementById('otpMsg').innerText = "OTP bhej rahe hain...";
+        
+        fetch('/send_otp', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `email=${email}`
+        }).then(res => res.json()).then(data => {
+            if(data.status === 'success') {
+                document.getElementById('otpInputArea').style.display = 'block';
+                document.getElementById('otpMsg').style.color = 'green';
+                document.getElementById('otpMsg').innerText = "OTP Email par bhej diya gaya hai!";
+            } else { alert("Error: " + data.message); }
+        });
+    }
 
+    function verifyOTP() {
+        const code = document.getElementById('otp_code').value;
+        fetch('/verify_otp', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `otp=${code}`
+        }).then(res => res.json()).then(data => {
+            if(data.status === 'success') {
+                document.getElementById('otpMsg').style.color = 'blue';
+                document.getElementById('otpMsg').innerText = "Email Verified Successfully!";
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('email').readOnly = true;
+            } else { alert("Galat OTP!"); }
+        });
+    }
+</script>
 </body>
-                            </html>
-                        
+                                                        </html>
+    
